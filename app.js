@@ -4,6 +4,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var hbs = require('express-handlebars');
+var session = require('express-session');
+var MongoDBStore = require('connect-mongodb-session')(session);
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -11,6 +14,29 @@ var users = require('./routes/users');
 var app = express();
 
 // view engine setup
+app.engine('.hbs', hbs({
+    extname: '.hbs',
+    defaultLayout: 'layout',
+    partialsDir: path.join(__dirname, 'views/partials')
+}));
+
+var mongo_pw = process.env.MONGO_PW;
+var url = 'mongodb://mongo:' + mongo_pw + '@localhost:27017/pokemon?authSource=admin';
+
+var store = new MongoDBStore({
+    uri: url,
+    collection: 'sessions'
+}, function(err){
+    console.log(err)
+});
+
+app.use(session({
+    secret: '3k3lkm6576lkmew098fknmf9876g3n',
+    resave: false,
+    saveUninitialized: false,
+    store: store
+}));
+
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 

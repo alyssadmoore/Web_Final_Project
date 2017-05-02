@@ -3,27 +3,47 @@ var router = express.Router();
 var Pokedex = require('pokedex-promise-v2');
 var P = new Pokedex();
 
-/* GET home page. */
+// Gets home page
 router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-// TODO send back number & sprite as well
+// Sends back pokemon search results
 router.get('/searchPokemon', function(req, res, next){
     var search = req.query.pokemon_name.toLowerCase();  // search doesn't work if any part is capitalized
     P.getPokemonByName(search).then(function(response){
         var name = response['name'];
-        var num = response['id'];
+        var id = response['id'];
         var sprite = response['sprites']['front_default'];
         // console.log(response);
-        res.render('index', {sprite: sprite, pokemon: name, num: num})
+        res.render('index', {sprite: sprite, pokemon: name, pokemon_id: id})
     }).catch(function(err){
-        console.log('Error:', err)
+        res.render('index')
     });
 });
 
-// router.get('/savePokemon', function(req, res, next){
-//
-// });
+// TODO save pokemon to team
+router.get('/savePokemon', function(req, res, next){
+    res.render('index')
+});
+
+// Sends back move search results
+router.get('/searchMoves', function(req, res, next){
+    var search = req.query.move_name.toLowerCase();  // search doesn't work if any part is capitalized
+    P.getMoveByName(search).then(function(response){
+        var move = response['name'];
+        var type = response['type']['name'];
+        // console.log(response);
+        res.render('index', {move: move, type: type})
+    }).catch(function(err){
+        res.render('index')
+    });
+});
+
+// TODO save move to moveset
+router.get('/savePokemon', function(req, res, next){
+    res.render('index')
+});
+
 
 module.exports = router;

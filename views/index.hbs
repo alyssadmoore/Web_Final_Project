@@ -1,24 +1,50 @@
 <h1>PokeSite</h1>
-<h2>Search & save your favorite teams, movesets, and more</h2>
+<h2>Search & save your favorite teams and movesets</h2>
+<br>
 
-<div>
+<div class="pokesearch">
     <P>Pokemon Search</P>
 
     <form action="/searchPokemon" method="GET">
-        <label for="pokemon">Enter name: </label>
+        <label>Enter name: </label>
         <input id="pokemon_name" type="text" name="pokemon_name">
         <input type="submit" value="Search">
     </form>
 </div>
 
+<div class="pokeresults">
+    {{#if pokemon}}
+        <h3>Result: <img src="{{ sprite }}" align="middle"> {{ pokemon }}, pokedex #{{ pokemon_id }}</h3>
+        <form action="/savePokemon" method="POST">
+            <input id="pokemon_id" type="hidden" name="pokemon_id" value="{{ pokemon_id }}">
+            <input type="submit" value="Click here to save this pokemon to a team">
+        </form>
+    {{else}}
+        <h3>Sorry, no results.</h3>
+    {{/if}}
+</div>
 
-{{#if pokemon}}
-    <h3 id="pokemon_list_name">Results: <img src="{{ sprite }}" align="middle"> {{ pokemon }}, pokedex #{{ num }}</h3>
-    <form action="/savePokemon" method="POST">
-        <input id="pokemon_save" type="hidden" name="pokemon_save" value="{{ num }}">
-        <input type="submit" value="Click here to save this pokemon to a team">
+<div class="movesearch">
+    <P>Move Search</P>
+
+    <form action="/searchMoves" method="GET">
+        <label>Enter move: </label>
+        <input id="move_name" type="text" name="move_name">
+        <input type="submit" value="Search">
     </form>
-{{/if}}
+</div>
+
+<div class="moveresults">
+    {{#if move}}
+        <h3>Result: {{ move }}, type: {{ type }}</h3>
+        <form action="/saveMove" method="POST">
+            <input id="move_id" type="hidden" name="move_id" value="{{ move_id }}">
+            <input type="submit" value="Click here to save this move to a moveset">
+        </form>
+    {{else}}
+        <h3>Sorry, no results.</h3>
+    {{/if}}
+</div>
 
 
 {{> navigation}}

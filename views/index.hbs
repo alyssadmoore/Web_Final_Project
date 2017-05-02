@@ -13,9 +13,9 @@
 
 
 {{#if pokemon}}
-    <h3 id="pokemon_list_name">Results: '{{ pokemon }}'</h3>
+    <h3 id="pokemon_list_name">Results: <img src="{{ sprite }}" align="middle"> {{ pokemon }}, pokedex #{{ num }}</h3>
     <form action="/savePokemon" method="POST">
-        <input id="pokemon_save" type="hidden" name="pokemon_save" value="{{pokemon}}">
+        <input id="pokemon_save" type="hidden" name="pokemon_save" value="{{ num }}">
         <input type="submit" value="Click here to save this pokemon to a team">
     </form>
 {{/if}}

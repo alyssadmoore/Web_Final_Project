@@ -8,10 +8,15 @@ router.get('/', function(req, res, next) {
   res.render('index');
 });
 
-// TODO send back name & sprite as well
+// TODO send back number & sprite as well
 router.get('/searchPokemon', function(req, res, next){
-    P.getPokemonByName(req.query.pokemon_name).then(function(response){
-        res.render('index', {pokemon: response['id']})
+    var search = req.query.pokemon_name.toLowerCase();  // search doesn't work if any part is capitalized
+    P.getPokemonByName(search).then(function(response){
+        var name = response['name'];
+        var num = response['id'];
+        var sprite = response['sprites']['front_default'];
+        // console.log(response);
+        res.render('index', {sprite: sprite, pokemon: name, num: num})
     }).catch(function(err){
         console.log('Error:', err)
     });

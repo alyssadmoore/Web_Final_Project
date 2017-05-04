@@ -1,0 +1,17 @@
+<h1>Movesets</h1>
+{{> navigation}}
+
+<!-- Max 4 moves to a moveset -->
+<div class="moves">
+    <ul>
+        {{#each moves}}
+            <p>Moveset #{{this.moveset_id}}</p>
+            <li>1. {{this.m1}}</li>
+            <li>2. {{this.m2}}</li>
+            <li>3. {{this.m3}}</li>
+            <li>4. {{this.m4}}</li>
+            <p>Id: {{id}}</p>
+            <br>
+        {{/each}}
+    </ul>
+</div>

@@ -1,5 +1,6 @@
 <h1>PokeSite</h1>
 <h2>Search & save your favorite teams and movesets</h2>
+{{> navigation}}
 <br>
 
 <div class="pokesearch">
@@ -15,8 +16,8 @@
 <div class="pokeresults">
     {{#if pokemon}}
         <h3>Result: <img src="{{ sprite }}" align="middle"> {{ pokemon }}, pokedex #{{ pokemon_id }}</h3>
-        <form action="/savePokemon" method="POST">
-            <input id="pokemon_id" type="hidden" name="pokemon_id" value="{{ pokemon_id }}">
+        <form action="/savePokemon" method="GET">
+            <input id="pokemon_id" type="hidden" name="pokemon_id" value={{ pokemon_id }}>
             <input type="submit" value="Click here to save this pokemon to a team">
         </form>
     {{else}}
@@ -37,14 +38,11 @@
 <div class="moveresults">
     {{#if move}}
         <h3>Result: {{ move }}, type: {{ type }}</h3>
-        <form action="/saveMove" method="POST">
-            <input id="move_id" type="hidden" name="move_id" value="{{ move_id }}">
+        <form action="/saveMove" method="GET">
+            <input id="move_name" type="hidden" name="move_name" value="{{ move }}">
             <input type="submit" value="Click here to save this move to a moveset">
         </form>
     {{else}}
         <h3>Sorry, no results.</h3>
     {{/if}}
 </div>
-
-
-{{> navigation}}

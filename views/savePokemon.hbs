@@ -1,6 +1,7 @@
 <h1>Pokemon Teams</h1>
 {{> navigation}}
-<br>
+
+<h2>To which team would you like to save this pokemon?</h2>
 
 <!-- Max 6 pokemon to a team -->
 <div class="team">
@@ -13,7 +14,11 @@
             <li>4. {{this.p4}}</li>
             <li>5. {{this.p5}}</li>
             <li>6. {{this.p6}}</li>
-            <p>Id: {{id}}</p>
+            <br>
+            <form action="/savePokemon" method="POST">
+                <input type="hidden" value="{{ ../id }}" id="id" name="id">
+                <input type="submit" value="Save to this team">
+            </form>
             <br>
         {{/each}}
     </ul>

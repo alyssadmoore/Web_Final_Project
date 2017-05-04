@@ -22,9 +22,31 @@ router.get('/searchPokemon', function(req, res, next){
     });
 });
 
-// TODO save pokemon to team
+// Page where you select which team to add the pokemon to
 router.get('/savePokemon', function(req, res, next){
-    res.render('index')
+    req.db.collection('teams').find().toArray(function(err, docs){
+        if(err){
+            return next(err)
+        }
+        res.render('savePokemon', {pokemon: docs, id: req.query.pokemon_id})
+    });
+});
+
+// TODO save pokemon to a team
+router.post('/savePokemon', function(req, res, next){
+    var id = req.body.id;
+    console.log(id);
+    res.redirect('/teams')
+});
+
+// Get teams
+router.get('/teams', function(req, res, next){
+    req.db.collection('teams').find().toArray(function(err, docs){
+        if(err){
+            return next(err)
+        }
+        res.render('teams', {pokemon: docs})
+    });
 });
 
 // Sends back move search results
@@ -41,9 +63,18 @@ router.get('/searchMoves', function(req, res, next){
 });
 
 // TODO save move to moveset
-router.get('/savePokemon', function(req, res, next){
-    res.render('index')
+router.post('/saveMove', function(req, res, next){
+    res.redirect('movesets')
 });
 
+// Get movesets
+router.get('/movesets', function(req, res, next){
+    req.db.collection('movesets').find().toArray(function(err, docs){
+        if(err){
+            return next(err)
+        }
+        res.render('movesets', {moves: docs})
+    });
+});
 
 module.exports = router;

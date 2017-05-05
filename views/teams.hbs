@@ -1,6 +1,5 @@
 <h1>Pokemon Teams</h1>
 {{> navigation}}
-<br>
 
 <div class="newteam">
     <p></p>
@@ -22,7 +21,11 @@
             <li>4. {{this.p4}}</li>
             <li>5. {{this.p5}}</li>
             <li>6. {{this.p6}}</li>
-            <p>Id: {{id}}</p>
+
+            <form action="/editTeam" method="GET">
+
+            </form>
+
             <br>
         {{/each}}
     </ul>

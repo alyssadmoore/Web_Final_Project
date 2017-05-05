@@ -12,25 +12,27 @@ router.get('/', function(req, res, next) {
 // Sends back pokemon search results
 router.get('/searchPokemon', function(req, res, next){
     var search = req.query.pokemon_name.toLowerCase();  // search doesn't work if any part is capitalized
-    P.getPokemonByName(search).then(function(response){
-        var name = response['name'];
-        var id = response['id'];
-        var sprite = response['sprites']['front_default'];
-        // console.log(response);
-        res.render('index', {sprite: sprite, pokemon: name, pokemon_id: id})
+    P.getPokemonByName(search)
+        .then(function(response){
+            var name = response['name'];
+            var id = response['id'];
+            var sprite = response['sprites']['front_default'];
+            res.render('index', {sprite: sprite, pokemon: name, pokemon_id: id})
     }).catch(function(err){
-        res.render('index')
+        res.render('index');
+        return next(err)
     });
 });
 
 // Page where you select which team to add the pokemon to
 router.get('/savePokemon', function(req, res, next){
-    req.db.collection('teams').find().toArray(function(err, docs){
-        if(err){
+    req.db.collection('teams').find().toArray()
+        .then(function(response){
+            res.render('savePokemon', {pokemon: response, name: req.query.pokemon_name})})
+        .catch(function(err){
+            res.render('/teams');
             return next(err)
-        }
-        res.render('savePokemon', {pokemon: docs, name: req.query.pokemon_name})
-    });
+        })
 });
 
 // TODO save pokemon to a team
@@ -147,12 +149,13 @@ router.post('/savePokemon', function(req, res, next){
 
 // Get teams
 router.get('/teams', function(req, res, next){
-    req.db.collection('teams').find().toArray(function(err, docs){
-        if(err){
+    req.db.collection('teams').find().toArray()
+        .then(function(response){
+            res.render('/teams', {pokemon: response})})
+        .catch(function(err){
+            res.render('/teams');
             return next(err)
-        }
-        res.render('teams', {pokemon: docs})
-    });
+        })
 });
 
 // Add a new, empty team
@@ -160,22 +163,24 @@ router.post('/newteam', function(req, res, next){
     var title = req.body.title;
     req.db.collection('teams').insertOne({"title":title, "p1":null, "p2":null, "p3":null, "p4":null, "p5":null, "p6":null})
         .then(function(response){
-            res.redirect('/teams')
+            res.redirect('/teams')})
+        .catch(function(err){
+            res.redirect('/teams');
+            return next(err)
         })
 });
-
-
 
 // Sends back move search results
 router.get('/searchMoves', function(req, res, next){
     var search = req.query.move_name.toLowerCase();  // search doesn't work if any part is capitalized
-    P.getMoveByName(search).then(function(response){
-        var move = response['name'];
-        var type = response['type']['name'];
-        // console.log(response);
-        res.render('index', {move: move, type: type})
-    }).catch(function(err){
-        res.render('index')
+    P.getMoveByName(search)
+        .then(function(response){
+            var move = response['name'];
+            var type = response['type']['name'];
+            res.render('index', {move: move, type: type})})
+        .catch(function(err){
+            res.render('index');
+            return next(err)
     });
 });
 
@@ -186,21 +191,22 @@ router.post('/saveMove', function(req, res, next){
 
 // Get movesets
 router.get('/movesets', function(req, res, next){
-    req.db.collection('movesets').find().toArray(function(err, docs){
-        if(err){
+    req.db.collection('movesets').find().toArray()
+        .then(function(response) {
+            res.render('movesets', {moves: response})})
+        .catch(function(err){
             return next(err)
-        }
-        res.render('movesets', {moves: docs})
-    });
+    })
 });
 
-//Add a new, empty moveset
-// Add a new, empty team
+// Add a new, empty moveset
 router.post('/newmoveset', function(req, res, next){
     var title = req.body.title;
     req.db.collection('movesets').insertOne({"title":title, "m1":null, "m2":null, "m3":null, "m4":null, "m5":null, "m6":null})
         .then(function(response){
-            res.redirect('/movesets')
+            res.redirect('/movesets')})
+        .catch(function(err){
+            return next(err)
         })
 });
 

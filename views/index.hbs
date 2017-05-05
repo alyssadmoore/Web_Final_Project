@@ -3,6 +3,7 @@
 {{> navigation}}
 <br>
 
+
 <div class="pokesearch">
     <P>Pokemon Search</P>
 
@@ -17,13 +18,14 @@
     {{#if pokemon}}
         <h3>Result: <img src="{{ sprite }}" align="middle"> {{ pokemon }}, pokedex #{{ pokemon_id }}</h3>
         <form action="/savePokemon" method="GET">
-            <input id="pokemon_id" type="hidden" name="pokemon_id" value={{ pokemon_id }}>
+            <input id="pokemon_name" type="hidden" name="pokemon_name" value={{ pokemon }}>
             <input type="submit" value="Click here to save this pokemon to a team">
         </form>
     {{else}}
         <h3>Sorry, no results.</h3>
     {{/if}}
 </div>
+
 
 <div class="movesearch">
     <P>Move Search</P>

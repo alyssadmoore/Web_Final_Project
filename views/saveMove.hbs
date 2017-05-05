@@ -1,6 +1,8 @@
 <h1>Movesets</h1>
 {{> navigation}}
 
+<h2>To which moveset would you like to save this move?</h2>
+
 <!-- Max 4 moves to a moveset -->
 <div class="moves">
     <ul>
@@ -10,7 +12,11 @@
             <li>2. {{this.m2}}</li>
             <li>3. {{this.m3}}</li>
             <li>4. {{this.m4}}</li>
-            <p>Id: {{id}}</p>
+            <br>
+            <form action="/saveMove" method="POST">
+                <input type="hidden" value="{{ ../id }}" id="id" name="id">
+                <input type="submit" value="Save to this moveset">
+            </form>
             <br>
         {{/each}}
     </ul>

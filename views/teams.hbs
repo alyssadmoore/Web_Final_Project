@@ -2,11 +2,20 @@
 {{> navigation}}
 <br>
 
+<div class="newteam">
+    <p></p>
+    <form action="/newteam" method="POST">
+        <label for="title">Team Name:</label>
+        <input type="text" id="title" name="title">
+        <input type="submit" value="Create a new team">
+    </form>
+</div>
+
 <!-- Max 6 pokemon to a team -->
 <div class="team">
     <ul>
         {{#each pokemon}}
-            <p>Team #{{this.team_id}}</p>
+            <p>{{this.title}}:</p>
             <li>1. {{this.p1}}</li>
             <li>2. {{this.p2}}</li>
             <li>3. {{this.p3}}</li>

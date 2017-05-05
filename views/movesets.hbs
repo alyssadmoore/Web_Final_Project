@@ -2,11 +2,20 @@
 {{> navigation}}
 <br>
 
+<div class="newmoveset">
+    <p></p>
+    <form action="/newmoveset" method="POST">
+        <label for="title">Moveset Name:</label>
+        <input type="text" id="title" name="title">
+        <input type="submit" value="Create a new moveset">
+    </form>
+</div>
+
 <!-- Max 4 moves to a moveset -->
 <div class="moves">
     <ul>
         {{#each moves}}
-            <p>Moveset #{{this.moveset_id}}</p>
+            <p>{{this.title}}</p>
             <li>1. {{this.m1}}</li>
             <li>2. {{this.m2}}</li>
             <li>3. {{this.m3}}</li>

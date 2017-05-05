@@ -17,10 +17,10 @@ router.get('/searchPokemon', function(req, res, next){
             var name = response['name'];
             var id = response['id'];
             var sprite = response['sprites']['front_default'];
-            res.render('index', {sprite: sprite, pokemon: name, pokemon_id: id})
-    }).catch(function(err){
-        res.render('index');
-        return next(err)
+            res.render('index', {sprite: sprite, pokemon: name, pokemon_id: id})})
+        .catch(function(err){
+            res.render('index');
+            return next(err)
     });
 });
 
@@ -30,7 +30,7 @@ router.get('/savePokemon', function(req, res, next){
         .then(function(response){
             res.render('savePokemon', {pokemon: response, name: req.query.pokemon_name})})
         .catch(function(err){
-            res.render('/teams');
+            res.render('teams');
             return next(err)
         })
 });
@@ -46,114 +46,161 @@ router.post('/savePokemon', function(req, res, next){
         return req.db.collection('teams').findOne({"_id": ObjectId(req.body.id), "p1": null})
             .then(function (response) {
                 if (response) {
-                    req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p1": req.body.name}});
-                    again = false;
+                    req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p1": req.body.name}})
+                        .then(function (response) {
+                            again = false;
+                            return again
+                        }).catch(function(err){
+                            return next(err)
+                        })
+                } else {
                     return again
                 }
-            });
+            }).catch(function(err){
+                return next(err)
+            })
     }
 
     function method2(again) {
             return req.db.collection('teams').findOne({"_id": ObjectId(req.body.id), "p2": null})
                 .then(function (response) {
-                    if (response) {
-                        req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p2": req.body.name}});
-                        again = false;
+                    if (response && again){
+                        req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p2": req.body.name}})
+                            .then(function(response){
+                                again = false;
+                                return again
+                            }).catch(function(err){
+                                return next(err)
+                            })
+                    } else {
                         return again
                     }
-                });
+                }).catch(function(err){
+                    return next(err)
+                })
     }
 
     function method3(again) {
             return req.db.collection('teams').findOne({"_id": ObjectId(req.body.id), "p3": null})
                 .then(function (response) {
-                    if (response) {
-                        req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p3": req.body.name}});
-                        again = false;
+                    if (response && again) {
+                        req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p3": req.body.name}})
+                            .then(function(response){
+                                again = false;
+                                return again
+                            }).catch(function(err){
+                                return next(err)
+                            })
+                    } else {
                         return again
                     }
-                });
+                }).catch(function(err){
+                    return next(err)
+                })
     }
 
     function method4(again) {
             return req.db.collection('teams').findOne({"_id": ObjectId(req.body.id), "p4": null})
                 .then(function (response) {
-                    if (response) {
-                        req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p4": req.body.name}});
-                        again = false;
+                    if (response && again) {
+                        req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p4": req.body.name}})
+                            .then(function(response){
+                                again = false;
+                                return again
+                            }).catch(function(err){
+                                return next(err)
+                            })
+                    } else {
                         return again
                     }
-                });
+                }).catch(function (err) {
+                    return next(err)
+                })
     }
 
     function method5(again) {
             return req.db.collection('teams').findOne({"_id": ObjectId(req.body.id), "p5": null})
                 .then(function (response) {
-                    if (response) {
-                        req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p5": req.body.name}});
-                        again = false;
+                    if (response && again) {
+                        req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p5": req.body.name}})
+                            .then(function(response){
+                                again = false;
+                                return again
+                            }).catch(function(err){
+                                return next(err)
+                            })
+                    } else {
                         return again
                     }
-                });
+                }).catch(function(err){
+                    return next(err)
+                })
     }
 
-    function method6() {
-            return req.db.collection('teams').findOne({"_id": ObjectId(req.body.id), "p6": null})
+    function method6(again) {
+            req.db.collection('teams').findOne({"_id": ObjectId(req.body.id), "p6": null})
                 .then(function (response) {
-                    if (response) {
-                        req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p6": req.body.name}});
+                    if (response && again) {
+                        return req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p6": req.body.name}})
+                            .then(function(response){
+                                res.redirect('teams')
+                            }).catch(function(err){
+                                return next(err)
+                            })
+                    } else {
+                        return again
                     }
-                });
+                }).catch(function(err){
+                    return next(err)
+                })
     }
 
-    method1().then(function(a){
+    method1().then(function(a) {
         console.log(a);
-        if (a){
-            var b = method2(a).then(function(b){
-                if (b){
-                    var c = method3(b).then(function(c){
-                        if (c){
-                            var d = method4(c).then(function(d){
-                                if (d){
-                                    var e = method5(d).then(function(e){
-                                        if (e){
-                                            method6()
-                                        }
-                                    })
-                                }
-                            })
-                        }
-                    })
-                }
-            })
+        if (!a){
+            res.redirect('teams')
+        } else {
+            return method2(a)
+        }
+    }).then(function(b){
+        console.log(b);
+        if (!b){
+            res.redirect('teams')
+        } else {
+            return method3(b)
+        }
+    }).then(function(c){
+        console.log(c);
+        if (!c){
+            res.redirect('teams')
+        } else {
+            return method4(c)
+        }
+    }).then(function(d){
+        console.log(d);
+        if (!d){
+            res.redirect('teams')
+        } else {
+            return method5(d)
+        }
+    }).then(function(e){
+        console.log(e);
+        if (!e){
+            res.redirect('teams')
+        } else {
+            return method6(e)
         }
     });
-    // if (a){
-    //     var b = method2(a);
-    //     if (b){
-    //         var c = method3(b);
-    //         if (c){
-    //             var d = method4(c);
-    //             if (d){
-    //                 var e = method5(d);
-    //                 if (e){
-    //                     method6()
-    //                 }
-    //             }
-    //         }
-    //     }
-    // }
 
-    return res.redirect('/teams')
 });
 
 // Get teams
 router.get('/teams', function(req, res, next){
     req.db.collection('teams').find().toArray()
         .then(function(response){
-            res.render('/teams', {pokemon: response})})
+            res.render('teams', {pokemon: response})})
         .catch(function(err){
-            res.render('/teams');
+            res.render('teams');
             return next(err)
         })
 });
@@ -163,9 +210,9 @@ router.post('/newteam', function(req, res, next){
     var title = req.body.title;
     req.db.collection('teams').insertOne({"title":title, "p1":null, "p2":null, "p3":null, "p4":null, "p5":null, "p6":null})
         .then(function(response){
-            res.redirect('/teams')})
+            res.redirect('teams')})
         .catch(function(err){
-            res.redirect('/teams');
+            res.redirect('teams');
             return next(err)
         })
 });
@@ -181,7 +228,7 @@ router.get('/searchMoves', function(req, res, next){
         .catch(function(err){
             res.render('index');
             return next(err)
-    });
+    })
 });
 
 // TODO save move to moveset

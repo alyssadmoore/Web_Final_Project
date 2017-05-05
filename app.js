@@ -1,14 +1,9 @@
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var hbs = require('express-handlebars');
 var morgan = require('morgan');
-var flash = require('connect-flash');
-var passport = require('passport');
-var session = require('express-session');
 var assert = require('assert');
 var MongoClient = require('mongodb').MongoClient;
 var expressValidator = require('express-validator');
@@ -42,12 +37,7 @@ MongoClient.connect(url, function(err, db){
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(expressValidator());
-    app.use(cookieParser());
     app.use(express.static(path.join(__dirname, 'public')));
-    app.use(session({secret: '65lkmfds09i2lkmg3dsjm300sd'}));
-    app.use(passport.initialize());
-    app.use(passport.session());
-    app.use(flash());
 
     app.use('/', function(req, res, next){
         req.db = db;

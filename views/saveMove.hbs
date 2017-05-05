@@ -7,16 +7,19 @@
 <div class="moves">
     <ul>
         {{#each moves}}
-            <p>Moveset #{{this.moveset_id}}</p>
+            <p>{{this.title}}</p>
             <li>1. {{this.m1}}</li>
             <li>2. {{this.m2}}</li>
             <li>3. {{this.m3}}</li>
             <li>4. {{this.m4}}</li>
             <br>
-            <form action="/saveMove" method="POST">
-                <input type="hidden" value="{{ ../id }}" id="id" name="id">
-                <input type="submit" value="Save to this moveset">
-            </form>
+            {{#unless this.m4}} <!-- If there is anything in  m4, the moveset is full -->
+                <form action="/saveMove" method="POST">
+                    <input type="hidden" value="{{ this._id }}" id="id" name="id">
+                    <input type="hidden" value="{{ ../name }}" id="name" name="name">
+                    <input type="submit" value="Save to this moveset">
+                </form>
+            {{/unless}}
             <br>
         {{/each}}
     </ul>

@@ -35,7 +35,7 @@ router.get('/savePokemon', function(req, res, next){
         })
 });
 
-// TODO save pokemon to a team
+// Save a pokemon to a team
 router.post('/savePokemon', function(req, res, next){
     /* By querying for null column entries in order, we can find the first null column by
         looking for the first one to return something (not null)*/
@@ -155,42 +155,55 @@ router.post('/savePokemon', function(req, res, next){
                 })
     }
 
+    // Chaining the promises to access variable 'again', if changed
     method1().then(function(a) {
-        console.log(a);
         if (!a){
             res.redirect('teams')
         } else {
             return method2(a)
         }
     }).then(function(b){
-        console.log(b);
         if (!b){
             res.redirect('teams')
         } else {
             return method3(b)
         }
     }).then(function(c){
-        console.log(c);
         if (!c){
             res.redirect('teams')
         } else {
             return method4(c)
         }
     }).then(function(d){
-        console.log(d);
         if (!d){
             res.redirect('teams')
         } else {
             return method5(d)
         }
     }).then(function(e){
-        console.log(e);
         if (!e){
             res.redirect('teams')
         } else {
             return method6(e)
         }
     });
+});
+
+// TODO page where user selects which pokemon from team to remove
+router.get('/removeFromTeam', function(req, res, next){
+    var id = req.body.id;
+    console.log(id);
+    req.db.collection('teams').findOne({'_id': ObjectId(id)})
+        .then(function(response){
+            res.render('removeFromTeam', {pokemon: response})
+        }).catch(function(err){
+            res.render('/');
+            return next(err)
+    })
+});
+
+// TODO remove pokemon from team, redirect to team page
+router.post('/removeFromTeam', function(req, res, next){
 
 });
 
@@ -224,16 +237,124 @@ router.get('/searchMoves', function(req, res, next){
         .then(function(response){
             var move = response['name'];
             var type = response['type']['name'];
-            res.render('index', {move: move, type: type})})
-        .catch(function(err){
+            res.render('index', {move: move, type: type})
+        }).catch(function(err){
             res.render('index');
             return next(err)
     })
 });
 
+// TODO Page where you select which moveset to add the move to
+router.get('/saveMove', function(req, res, next){
+    req.db.collection('movesets').find().toArray()
+        .then(function(response){
+            res.render('saveMove', {moves: response, name: req.query.move_name})
+        }).catch(function(err){
+            res.render('movesets');
+            return next(err)
+        })
+});
+
 // TODO save move to moveset
-router.post('/saveMove', function(req, res, next){
-    res.redirect('movesets')
+router.post('/saveMove', function(req, res, next){  // Same basic method as /savePokemon POST above
+    var again = true;
+
+    function method1() {
+        return req.db.collection('movesets').findOne({"_id": ObjectId(req.body.id), "m1": null})
+            .then(function (response) {
+                if (response) {
+                    req.db.collection('movesets').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"m1": req.body.name}})
+                        .then(function (response) {
+                            again = false;
+                            return again
+                        }).catch(function(err){
+                        return next(err)
+                    })
+                } else {
+                    return again
+                }
+            }).catch(function(err){
+                return next(err)
+            })
+    }
+
+    function method2(again) {
+        return req.db.collection('movesets').findOne({"_id": ObjectId(req.body.id), "m2": null})
+            .then(function (response) {
+                if (response && again){
+                    req.db.collection('movesets').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"m2": req.body.name}})
+                        .then(function(response){
+                            again = false;
+                            return again
+                        }).catch(function(err){
+                        return next(err)
+                    })
+                } else {
+                    return again
+                }
+            }).catch(function(err){
+                return next(err)
+            })
+    }
+
+    function method3(again) {
+        return req.db.collection('movesets').findOne({"_id": ObjectId(req.body.id), "m3": null})
+            .then(function (response) {
+                if (response && again) {
+                    req.db.collection('movesets').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"m3": req.body.name}})
+                        .then(function(response){
+                            again = false;
+                            return again
+                        }).catch(function(err){
+                        return next(err)
+                    })
+                } else {
+                    return again
+                }
+            }).catch(function(err){
+                return next(err)
+            })
+    }
+
+    function method4(again) {
+        return req.db.collection('movesets').findOne({"_id": ObjectId(req.body.id), "m4": null})
+            .then(function (response) {
+                if (response && again) {
+                    req.db.collection('movesets').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"m4": req.body.name}})
+                        .then(function(response){
+                            again = false;
+                            return again
+                        }).catch(function(err){
+                        return next(err)
+                    })
+                } else {
+                    return again
+                }
+            }).catch(function (err) {
+                return next(err)
+            })
+    }
+
+    // Chaining the promises to access variable 'again', if changed
+    method1().then(function(a) {
+        if (!a){
+            res.redirect('movesets')
+        } else {
+            return method2(a)
+        }
+    }).then(function(b){
+        if (!b){
+            res.redirect('movesets')
+        } else {
+            return method3(b)
+        }
+    }).then(function(c){
+        if (!c){
+            res.redirect('movesets')
+        } else {
+            return method4(c)
+        }
+    })
 });
 
 // Get movesets

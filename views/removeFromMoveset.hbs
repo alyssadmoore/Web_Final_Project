@@ -1,0 +1,41 @@
+<h1>Movesets</h1>
+{{> navigation}}
+
+<div class="editTeam">
+    <h3>Which move would you like to remove?</h3>
+    <ul>
+        {{moveset.title}}
+        <li>1. {{moveset.m1}}</li>
+        {{#if moveset.m1}}
+            <form action="/removeFromMoveset" method="POST">
+                <input type="hidden" id="moveset" name="moveset" value={{moveset._id}}>
+                <input type="hidden" id="move" name="move" value="m1">
+                <input type="submit" value="Remove">
+            </form>
+        {{/if}}
+        <li>2. {{moveset.m2}}</li>
+        {{#if moveset.m2}}
+            <form action="/removeFromMoveset" method="POST">
+                <input type="hidden" id="moveset" name="moveset" value={{moveset._id}}>
+                <input type="hidden" id="move" name="move" value="m2">
+                <input type="submit" value="Remove">
+            </form>
+        {{/if}}
+        <li>3. {{moveset.m3}}</li>
+        {{#if moveset.m3}}
+            <form action="/removeFromMoveset" method="POST">
+                <input type="hidden" id="moveset" name="moveset" value={{moveset._id}}>
+                <input type="hidden" id="move" name="move" value="m3">
+                <input type="submit" value="Remove">
+            </form>
+        {{/if}}
+        <li>4. {{moveset.p4}}</li>
+        {{#if moveset.p4}}
+            <form action="/removeFromMoveset" method="POST">
+                <input type="hidden" id="moveset" name="moveset" value={{moveset._id}}>
+                <input type="hidden" id="move" name="move" value="m4">
+                <input type="submit" value="Remove">
+            </form>
+        {{/if}}
+    </ul>
+</div>

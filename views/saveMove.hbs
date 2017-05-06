@@ -13,13 +13,11 @@
             <li>3. {{this.m3}}</li>
             <li>4. {{this.m4}}</li>
             <br>
-            {{#unless this.m4}} <!-- If there is anything in  m4, the moveset is full -->
-                <form action="/saveMove" method="POST">
-                    <input type="hidden" value="{{ this._id }}" id="id" name="id">
-                    <input type="hidden" value="{{ ../name }}" id="name" name="name">
-                    <input type="submit" value="Save to this moveset">
-                </form>
-            {{/unless}}
+            <form action="/saveMove" method="POST">
+                <input type="hidden" value="{{ this._id }}" id="id" name="id">
+                <input type="hidden" value="{{ ../name }}" id="name" name="name">
+                <input type="submit" value="Save to this moveset">
+            </form>
             <br>
         {{/each}}
     </ul>

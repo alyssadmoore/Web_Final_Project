@@ -385,4 +385,29 @@ router.post('/newmoveset', function(req, res, next){
         })
 });
 
+// Page where user selects which pokemon from team to remove
+router.get('/removeFromMoveset', function(req, res, next){
+    var id = req.query.id;
+    req.db.collection('movesets').findOne({'_id': ObjectId(id)})
+        .then(function(response){
+            res.render('removeFromMoveset', {moveset: response})
+        }).catch(function(err){
+            res.render('/');
+            return next(err)
+    })
+});
+
+// Remove pokemon from team, redirect to team page
+router.post('/removeFromMoveset', function(req, res, next){
+    var moveset = req.body.moveset;
+    var move = req.body.move;
+    req.db.collection('movesets').updateOne({'_id': ObjectId(moveset)}, {$set: {[move]: null}})
+        .then(function(response){
+            res.redirect('movesets')
+        }).catch(function(err){
+        res.redirect('movesets');
+        return next(err)
+    })
+});
+
 module.exports = router;

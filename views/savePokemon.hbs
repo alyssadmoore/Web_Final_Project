@@ -15,13 +15,11 @@
             <li>5. {{this.p5}}</li>
             <li>6. {{this.p6}}</li>
             <br>
-            {{#unless this.p6}} <!-- If there is anything in p6, the team is full-->
             <form action="/savePokemon" method="POST">
                 <input type="hidden" value="{{ this._id }}" id="id" name="id">
                 <input type="hidden" value="{{ ../name }}" id="name" name="name">
                 <input type="submit" value="Save to this team">
             </form>
-            {{/unless}}
             <br>
         {{/each}}
     </ul>

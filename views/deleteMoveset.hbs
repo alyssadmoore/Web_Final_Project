@@ -1,0 +1,7 @@
+<h1>Delete Moveset</h1>
+
+<h2>Are you sure you want to delete {{moveset.title}}?</h2>
+<form action="/deleteMoveset" method="POST">
+    <input type="hidden" id="moveset" name="moveset" value={{moveset._id}}>
+    <input type="submit" value="Delete this moveset">
+</form>

@@ -409,6 +409,30 @@ router.post('/newmoveset', function(req, res, next){
         })
 });
 
+// Page asks user if they are sure they want to delete the moveset
+router.get('/deleteMoveset', function(req, res, next){
+    var moveset_id = req.query.moveset;
+    req.db.collection('movesets').findOne({"_id": ObjectId(moveset_id)})
+        .then(function(response){
+            res.render('deleteMoveset', {moveset: response})
+        }).catch(function(err){
+            res.render('movesets');
+            return next(err)
+    })
+});
+
+// Delete a team, redirect to movesets page
+router.post('/deleteMoveset', function(req, res, next){
+    var moveset_id = req.body.moveset;
+    req.db.collection('movesets').removeOne({"_id": ObjectId(moveset_id)})
+        .then(function(response){
+            res.redirect('movesets')
+        }).catch(function(err){
+        res.redirect('movesets');
+        return next(err)
+    })
+});
+
 // Page where user selects which pokemon from team to remove
 router.get('/removeFromMoveset', function(req, res, next){
     var id = req.query.id;

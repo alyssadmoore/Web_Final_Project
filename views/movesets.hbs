@@ -19,6 +19,10 @@
                 <input type="hidden" id="id" name="id" value={{this._id}}>
                 <input type="submit" value="Remove a move from this moveset">
             </form>
+            <form action="/deleteMoveset" method="GET">
+                <input type="hidden" id="moveset" name="moveset" value={{this._id}}>
+                <input type="submit" value="Delete this moveset">
+            </form>
             </p>
             <li>1. {{this.m1}}</li>
             <li>2. {{this.m2}}</li>

@@ -13,12 +13,12 @@
 <div class="team">
     <ul>
         {{#each pokemon}}
-            <p>{{this.title}}:
-                <form action="/removeFromTeam" method="GET">
-                    <input type="hidden" id="id" name="id" value={{this._id}}>
-                    <input type="submit" value="Remove a pokemon from this team">
-                </form>
-            </p>
+            <p>{{this.title}}:</p>
+            <form action="/removeFromTeam" method="GET">
+                <input type="hidden" id="team" name="team" value={{this._id}}>
+                <input type="submit" value="Remove a pokemon from this team">
+            </form>
+            <br>
             <li>1. {{this.p1}}</li>
             <li>2. {{this.p2}}</li>
             <li>3. {{this.p3}}</li>

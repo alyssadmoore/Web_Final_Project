@@ -189,22 +189,29 @@ router.post('/savePokemon', function(req, res, next){
     });
 });
 
-// TODO page where user selects which pokemon from team to remove
+// Page where user selects which pokemon from team to remove
 router.get('/removeFromTeam', function(req, res, next){
-    var id = req.body.id;
-    console.log(id);
+    var id = req.query.team;
     req.db.collection('teams').findOne({'_id': ObjectId(id)})
         .then(function(response){
-            res.render('removeFromTeam', {pokemon: response})
+            res.render('removeFromTeam', {pokemon: response, team: id})
         }).catch(function(err){
             res.render('/');
             return next(err)
     })
 });
 
-// TODO remove pokemon from team, redirect to team page
+// Remove pokemon from team, redirect to team page
 router.post('/removeFromTeam', function(req, res, next){
-
+    var team = req.body.team;
+    var pokemon = req.body.pokemon;
+    req.db.collection('teams').updateOne({'_id': ObjectId(team)}, {$set: {[pokemon]: null}})
+        .then(function(response){
+            res.redirect('teams')
+        }).catch(function(err){
+            res.redirect('teams');
+            return next(err)
+    })
 });
 
 // Get teams
@@ -244,7 +251,7 @@ router.get('/searchMoves', function(req, res, next){
     })
 });
 
-// TODO Page where you select which moveset to add the move to
+// Page where you select which moveset to add the move to
 router.get('/saveMove', function(req, res, next){
     req.db.collection('movesets').find().toArray()
         .then(function(response){
@@ -255,7 +262,7 @@ router.get('/saveMove', function(req, res, next){
         })
 });
 
-// TODO save move to moveset
+// Save move to moveset
 router.post('/saveMove', function(req, res, next){  // Same basic method as /savePokemon POST above
     var again = true;
 

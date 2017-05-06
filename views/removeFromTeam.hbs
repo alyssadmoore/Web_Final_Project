@@ -4,50 +4,54 @@
 <div class="editTeam">
     <h3>Which pokemon would you like to remove?</h3>
     <ul>
-        {{#each pokemon}}
-            {{this.title}}
-            <li>1. {{this.p1}}</li>
-            {{#if this.p1}}
-                <form action="/removeFromTeam" method="POST">
-                    <input type="hidden" value={{this.p1}}>
-                    <input type="submit" value="Remove">
-                </form>
-            {{/if}}
-            <li>2. {{this.p2}}</li>
-            {{#if this.p2}}
-                <form action="/removeFromTeam" method="POST">
-                    <input type="hidden" value={{this.p1}}>
-                    <input type="submit" value="Remove">
-                </form>
-            {{/if}}
-            <li>3. {{this.p3}}</li>
-            {{#if this.p3}}
-                <form action="/removeFromTeam" method="POST">
-                    <input type="hidden" value={{this.p1}}>
-                    <input type="submit" value="Remove">
-                </form>
-            {{/if}}
-            <li>4. {{this.p4}}</li>
-            {{#if this.p4}}
-                <form action="/removeFromTeam" method="POST">
-                    <input type="hidden" value={{this.p1}}>
-                    <input type="submit" value="Remove">
-                </form>
-            {{/if}}
-            <li>5. {{this.p5}}</li>
-            {{#if this.p5}}
-                <form action="/removeFromTeam" method="POST">
-                    <input type="hidden" value={{this.p1}}>
-                    <input type="submit" value="Remove">
-                </form>
-            {{/if}}
-            <li>6. {{this.p6}}</li>
-            {{#if this.p6}}
-                <form action="/removeFromTeam" method="POST">
-                    <input type="hidden" value={{this.p1}}>
-                    <input type="submit" value="Remove">
-                </form>
-            {{/if}}
-        {{/each}}
+        {{pokemon.title}}
+        <li>1. {{pokemon.p1}}</li>
+        {{#if pokemon.p1}}
+            <form action="/removeFromTeam" method="POST">
+                <input type="hidden" id="team" name="team" value={{team}}>
+                <input type="hidden" id="pokemon" name="pokemon" value="p1">
+                <input type="submit" value="Remove">
+            </form>
+        {{/if}}
+        <li>2. {{pokemon.p2}}</li>
+        {{#if pokemon.p2}}
+            <form action="/removeFromTeam" method="POST">
+                <input type="hidden" id="team" name="team" value={{team}}>
+                <input type="hidden" id="pokemon" name="pokemon" value="p2">
+                <input type="submit" value="Remove">
+            </form>
+        {{/if}}
+        <li>3. {{pokemon.p3}}</li>
+        {{#if pokemon.p3}}
+            <form action="/removeFromTeam" method="POST">
+                <input type="hidden" id="team" name="team" value={{team}}>
+                <input type="hidden" id="pokemon" name="pokemon" value="p3">
+                <input type="submit" value="Remove">
+            </form>
+        {{/if}}
+        <li>4. {{pokemon.p4}}</li>
+        {{#if pokemon.p4}}
+            <form action="/removeFromTeam" method="POST">
+                <input type="hidden" id="team" name="team" value={{team}}>
+                <input type="hidden" id="pokemon" name="pokemon" value="p4">
+                <input type="submit" value="Remove">
+            </form>
+        {{/if}}
+        <li>5. {{pokemon.p5}}</li>
+        {{#if pokemon.p5}}
+            <form action="/removeFromTeam" method="POST">
+                <input type="hidden" id="team" name="team" value={{team}}>
+                <input type="hidden" id="pokemon" name="pokemon" value="p5">
+                <input type="submit" value="Remove">
+            </form>
+        {{/if}}
+        <li>6. {{pokemon.p6}}</li>
+        {{#if pokemon.p6}}
+            <form action="/removeFromTeam" method="POST">
+                <input type="hidden" id="team" name="team" value={{team}}>
+                <input type="hidden" id="pokemon" name="pokemon" value="p6">
+                <input type="submit" value="Remove">
+            </form>
+        {{/if}}
     </ul>
 </div>

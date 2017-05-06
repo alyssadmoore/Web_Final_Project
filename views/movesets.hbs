@@ -14,7 +14,12 @@
 <div class="moves">
     <ul>
         {{#each moves}}
-            <p>{{this.title}}</p>
+            <p>{{this.title}}:
+            <form action="/removeFromMoveset" method="GET">
+                <input type="hidden" id="id" name="id" value={{this._id}}>
+                <input type="submit" value="Remove a pokemon from this team">
+            </form>
+            </p>
             <li>1. {{this.m1}}</li>
             <li>2. {{this.m2}}</li>
             <li>3. {{this.m3}}</li>

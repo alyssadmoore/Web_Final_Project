@@ -237,6 +237,30 @@ router.post('/newteam', function(req, res, next){
         })
 });
 
+// Page asks user if they are sure they want to delete the team
+router.get('/deleteTeam', function(req, res, next){
+    var team_id = req.query.team;
+    req.db.collection('teams').findOne({"_id": ObjectId(team_id)})
+        .then(function(response){
+            res.render('deleteTeam', {team: response})
+        }).catch(function(err){
+            res.render('teams');
+            return next(err)
+    })
+});
+
+// Delete a team, redirect to teams page
+router.post('/deleteTeam', function(req, res, next){
+    var team_id = req.body.team;
+    req.db.collection('teams').removeOne({"_id": ObjectId(team_id)})
+        .then(function(response){
+            res.redirect('teams')
+        }).catch(function(err){
+            res.redirect('teams');
+            return next(err)
+    })
+});
+
 // Sends back move search results
 router.get('/searchMoves', function(req, res, next){
     var search = req.query.move_name.toLowerCase();  // search doesn't work if any part is capitalized

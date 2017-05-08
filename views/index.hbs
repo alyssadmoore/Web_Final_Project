@@ -19,13 +19,16 @@
         <h3>Result: <img src="{{ sprite }}" align="middle"> {{ pokemon }}, pokedex #{{ pokemon_id }}</h3>
         <form action="/savePokemon" method="GET">
             <input id="pokemon_name" type="hidden" name="pokemon_name" value={{ pokemon }}>
-            <input type="submit" value="Click here to save this pokemon to a team">
+            <input type="submit" value="Save this pokemon to a team">
+        </form>
+        <form action="/pokemon" method="GET">
+            <input id="pokemon" name="pokemon" type="hidden" value={{ pokemon }}>
+            <input type="submit" value="View stats">
         </form>
     {{else}}
         <h3>Sorry, no results.</h3>
     {{/if}}
 </div>
-
 
 <div class="movesearch">
     <P>Move Search</P>
@@ -42,7 +45,7 @@
         <h3>Result: {{ move }}, type: {{ type }}</h3>
         <form action="/saveMove" method="GET">
             <input id="move_name" type="hidden" name="move_name" value="{{ move }}">
-            <input type="submit" value="Click here to save this move to a moveset">
+            <input type="submit" value="Save this move to a moveset">
         </form>
     {{else}}
         <h3>Sorry, no results.</h3>

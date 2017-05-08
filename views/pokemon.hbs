@@ -1,0 +1,64 @@
+<div class="title capitalize">
+    <h1>{{name}}</h1>   <!-- TODO capitalize CSS -->
+    <p>Pokedex #{{id}}</p>  <!-- TODO horizontal align CSS -->
+</div>
+
+
+<div class="sprites">   <!-- TODO horizontal align CSS -->
+    <p>Regular: <img align="middle" src={{sprite}}></p>
+    <p>Shiny: <img align="middle" src={{shiny_sprite}}></p>
+</div>
+
+<p>Height: {{height}}</p>
+<p>Weight: {{weight}}</p>
+
+<h4>Types:</h4>
+    {{#each types}}
+        <ul>
+            <div class="capitalize">
+                <li>{{this.type.name}}</li>
+            </div>
+        </ul>
+    {{/each}}
+
+<h4>Stats:</h4>
+
+    <table border="1" cellpadding="5"> <!-- TODO convert to CSS-->
+
+        <tr>
+            <th></th>  <!-- Empty upper-left corner for 2-way grid -->
+            {{#each stats}}
+                <th>{{this.stat.name}}</th>
+            {{/each}}
+        </tr>
+
+        <tr>
+            <th>EV</th>
+            {{#each stats}}
+                <td>
+                    {{this.effort}}
+                </td>
+            {{/each}}
+        </tr>
+
+        <tr>
+            <th>Base</th>
+            {{#each stats}}
+                <td>
+                    {{this.base_stat}}
+                </td>
+            {{/each}}
+        </tr>
+
+    </table>
+
+<h4>Abilities:</h4>
+{{#each abilities}}
+    <ul>
+        <li>{{this.ability.name}}</li>
+        <ul>
+            <li>{{this.effect}}</li>
+            <li>Hidden? {{this.is_hidden}}</li>
+        </ul>
+    </ul>
+{{/each}}

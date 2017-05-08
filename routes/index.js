@@ -6,7 +6,70 @@ var P = new Pokedex();
 
 // Gets home page
 router.get('/', function(req, res, next) {
-  res.render('index');
+    res.render('index');
+});
+
+// TODO view specific information about any pokemon
+router.get('/pokemon', function(req, res, next){
+    var name = req.query.pokemon;
+
+    // Getting most of the data ready
+    function method1() {
+        return P.getPokemonByName(name)
+            .then(function (response) {
+                var name = response['name'];
+                var id = response['id'];
+                var sprite = response['sprites']['front_default'];
+                var shiny_sprite = response['sprites']['front_shiny'];
+                var weight = response['weight'];
+                var height = response['height'];
+                var stats = response['stats'];
+                var abilities = response['abilities'];
+                var types = response['types'];
+                return {
+                    name: name, id: id, sprite: sprite, shiny_sprite: shiny_sprite, weight: weight,
+                    height: height, stats: stats, abilities: abilities, types: types
+                }
+            }).catch(function (err) {
+                res.render('index');
+                return next(err)
+        });
+    }
+
+    // Pass abilities list to extract effect strings
+    function method2(x){
+        return P.getAbilityByName(x['ability']['name'])
+            .then(function(response){
+                return response['effect_entries'][0]['short_effect']
+            }).catch(function(err){
+                res.render('index');
+                return next(err)
+            });
+    }
+
+    function method3(y, ability_list){
+        for (var i = 0; i < data['abilities'].length; i++){
+            method2(data['abilities']).then(function(y){
+                ability_list.push(y);
+            })
+        }
+    }
+
+    // Get data dict, then send abilities to method2 to extract effects, then combine these with data dict
+    var ability_list = [];
+    method1().then(function(data){
+        for (var i = 0; i < data['abilities'].length; i++){
+            method2(data['abilities'][i]).then(function(entry){
+                ability_list.push(entry);
+                if (ability_list.length == data['abilities'].length){
+                    for (var j = 0; j < data['abilities'].length; j++){
+                        data['abilities'][j].effect = ability_list[j]
+                    }
+                    res.render('pokemon', data)
+                }
+            });
+        }
+    });
 });
 
 // Sends back pokemon search results
@@ -138,10 +201,10 @@ router.post('/savePokemon', function(req, res, next){
     }
 
     function method6(again) {
-            req.db.collection('teams').findOne({"_id": ObjectId(req.body.id), "p6": null})
+            return req.db.collection('teams').findOne({"_id": ObjectId(req.body.id), "p6": null})
                 .then(function (response) {
                     if (response && again) {
-                        return req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p6": req.body.name}})
+                        req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p6": req.body.name}})
                             .then(function(response){
                                 res.redirect('teams')
                             }).catch(function(err){

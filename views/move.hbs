@@ -1,0 +1,25 @@
+<h1>{{name}}</h1>
+
+{{> navigation}}
+<br>
+<h3>General info</h3>
+<p>Type: {{type}}</p>
+<p>Power: {{power}}</p>
+<p>Accuracy: {{accuracy}}</p>
+<p>PP: {{pp}}</p>
+<p>Damage class: {{damage_class}}</p>
+{{#if stat_changes}}
+    <p>Stat changes: {{stat_changes}}</p>
+{{/if}}
+{{#if effect_changes}}
+    <p>Effect changes: {{effect_changes}}</p>
+{{/if}}
+<p>Effect: {{effect}}</p>
+<br>
+<h3>Contest info</h3>
+<p>Contest type: {{contest_type}}</p>
+<p>Contest effect: {{contest_effect}}</p>
+<p>Super contest effect: {{super_contest_effect}}</p>
+{{#each contest_combos.normal.use_after}}
+    <p>{{contest_combos.normal.use_after.name}}</p>
+{{/each}}

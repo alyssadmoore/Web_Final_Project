@@ -2,9 +2,13 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var mongoose = require('mongoose');
 var hbs = require('express-handlebars');
 var morgan = require('morgan');
 var assert = require('assert');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var MongoClient = require('mongodb').MongoClient;
 var expressValidator = require('express-validator');
 
@@ -12,8 +16,6 @@ var routes = require('./routes/index');
 var users = require('./routes/users');
 
 var app = express();
-
-// TODO facebook login
 
 // view engine setup
 app.engine('.hbs', hbs({
@@ -36,8 +38,25 @@ MongoClient.connect(url, function(err, db){
     app.use(morgan('dev'));
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
+    app.use(cookieParser());
     app.use(expressValidator());
     app.use(express.static(path.join(__dirname, 'public')));
+
+    app.use(require('express-session')({
+        secret: 'sdr98243nifds9832njksfd09832m',
+        resave: false,
+        saveUninitialized: false
+    }));
+    app.use(passport.initialize());
+    app.use(passport.session());
+    app.use(express.static(path.join(__dirname, 'public')));
+
+    var Account = require('./models/account');
+    passport.use(new LocalStrategy(Account.authenticate()));
+    passport.serializeUser(Account.serializeUser());
+    passport.deserializeUser(Account.deserializeUser());
+
+    mongoose.connect('mongodb://localhost/passport_local_mongoose_express4');
 
     app.use('/', function(req, res, next){
         req.db = db;

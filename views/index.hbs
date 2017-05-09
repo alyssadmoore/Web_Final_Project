@@ -1,8 +1,18 @@
 <h1>PokeSite</h1>
 <h2>Search & save your favorite teams and movesets</h2>
+
+{{#unless user}}
+    <a href="/login">Login</a>
+    <br>
+    <a href="/register">Register</a>
+{{/unless}}
+{{#if user}}
+    <p>Welcome, {{user.username}}</p>
+    <a href="/logout">Logout</a>
+{{/if}}
+
 {{> navigation}}
 <br>
-
 
 <div class="pokesearch">
     <P>Pokemon Search</P>
@@ -46,6 +56,10 @@
         <form action="/saveMove" method="GET">
             <input id="move_name" type="hidden" name="move_name" value="{{ move }}">
             <input type="submit" value="Save this move to a moveset">
+        </form>
+        <form action="/move" method="GET">
+            <input id="move" name="move" type="hidden" value={{ move }}>
+            <input type="submit" value="View stats">
         </form>
     {{else}}
         <h3>Sorry, no results.</h3>

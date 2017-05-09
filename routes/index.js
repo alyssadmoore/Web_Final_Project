@@ -1,15 +1,54 @@
 var express = require('express');
+var https = require('https');
+var passport = require('passport');
+var Account = require('../models/account');
 var router = express.Router();
 var ObjectId = require('mongodb').ObjectId;
 var Pokedex = require('pokedex-promise-v2');
 var P = new Pokedex();
 
 // Gets home page
-router.get('/', function(req, res, next) {
-    res.render('index');
+router.get('/', function(req, res) {
+    res.render('index', {user: req.user});
 });
 
-// TODO view specific information about any pokemon
+// Register page
+router.get('/register', function(req, res) {
+    res.render('register', {});
+});
+
+// Passwords are salted & hashed automatically
+router.post('/register', function(req, res) {
+    Account.register(new Account({ username : req.body.username }), req.body.password, function(err, account) {
+        if (err) {
+            return res.render('register', { account : account });
+        }
+
+        passport.authenticate('local')(req, res, function () {
+            req.session.save(function(err){
+                if(err){
+                    return next(err)
+                }
+                res.redirect('/');
+            })
+        })
+    })
+});
+
+router.get('/login', function(req, res) {
+    res.render('login', { user : req.user });
+});
+
+router.post('/login', passport.authenticate('local'), function(req, res) {
+    res.redirect('/');
+});
+
+router.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/');
+});
+
+// View specific information about any pokemon
 router.get('/pokemon', function(req, res, next){
     var name = req.query.pokemon;
 
@@ -45,14 +84,6 @@ router.get('/pokemon', function(req, res, next){
                 res.render('index');
                 return next(err)
             });
-    }
-
-    function method3(y, ability_list){
-        for (var i = 0; i < data['abilities'].length; i++){
-            method2(data['abilities']).then(function(y){
-                ability_list.push(y);
-            })
-        }
     }
 
     // Get data dict, then send abilities to method2 to extract effects, then combine these with data dict
@@ -448,6 +479,68 @@ router.post('/saveMove', function(req, res, next){  // Same basic method as /sav
         } else {
             return method4(c)
         }
+    })
+});
+
+// View more information about a move
+router.get('/move', function(req, res, next){
+
+    function getInfo() {
+        return P.getMoveByName(req.query.move)
+            .then(function (response) {
+                var accuracy = response['accuracy'];
+                var power = response['power'];
+                var name = response['name'];
+                var type = response['type']['name'];
+                var stat_changes = response['stat_changes'];
+                var effect_changes = response['effect_changes'];
+                var effect = response['effect_entries'][0]['short_effect'];
+                var pp = response['pp'];
+                var damage_class = response['damage_class']['name'];
+                var contest_type = response['contest_type']['name'];
+                var contest_combos = response['contest_combos'];
+                var contest_effect_url = response['contest_effect']['url'];
+                var super_contest_effect_url = response['super_contest_effect']['url'];
+                // console.log(contest_combos['normal']['use_before'][0]['name']);
+                // console.log(contest_combos['super']['use_before'][0]['name']);
+                // console.log(contest_combos['normal']['use_after'][0]['name']);
+                // console.log(contest_combos['super']['use_after'][0]['name']);
+                var results = {
+                    accuracy: accuracy, power: power, name: name, type: type, stat_changes: stat_changes,
+                    effect_changes: effect_changes, pp: pp, effect: effect, damage_class: damage_class,
+                    contest_type: contest_type, contest_effect_url: contest_effect_url, contest_combos:
+                    contest_combos, super_contest_effect_url: super_contest_effect_url
+                };
+                return results
+            }).catch(function (err) {
+            res.render('index');
+            return next(err)
+        })
+    }
+
+    function parseJson(url, callback){
+        return https.get(url, function(res){
+            var body = '';
+            res.on('data', function(chunk){
+                body += chunk
+            });
+            res.on('end', function(){
+                var response = JSON.parse(body);
+                callback(response)
+            })
+        })
+    }
+
+    getInfo().then(function(data){
+        var a = data['contest_effect_url'].replace("http", "https");    // node doesn't like http, replace with https
+        return parseJson(a, function(json1){
+            data.contest_effect = json1['effect_entries'][0]['effect'];
+            var b = data['super_contest_effect_url'].replace("http", "https");
+            parseJson(b, function(json2){
+                data.super_contest_effect = json2['flavor_text_entries'][0]['flavor_text'];
+                res.render('move', data)
+            })
+        })
     })
 });
 

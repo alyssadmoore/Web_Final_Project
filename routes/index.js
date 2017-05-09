@@ -65,8 +65,9 @@ router.get('/pokemon', function(req, res, next){
                 var stats = response['stats'];
                 var abilities = response['abilities'];
                 var types = response['types'];
+                var title_name = titleCase(name);
                 return {
-                    name: name, id: id, sprite: sprite, shiny_sprite: shiny_sprite, weight: weight,
+                    name: title_name, id: id, sprite: sprite, shiny_sprite: shiny_sprite, weight: weight,
                     height: height, stats: stats, abilities: abilities, types: types
                 }
             }).catch(function (err) {
@@ -111,7 +112,8 @@ router.get('/searchPokemon', function(req, res, next){
             var name = response['name'];
             var id = response['id'];
             var sprite = response['sprites']['front_default'];
-            res.render('index', {sprite: sprite, pokemon: name, pokemon_id: id})})
+            var title_name = titleCase(name);
+            res.render('index', {sprite: sprite, pokemon: title_name, pokemon_id: id})})
         .catch(function(err){
             res.render('index');
             return next(err)
@@ -500,8 +502,9 @@ router.get('/move', function(req, res, next){
                 var contest_type = response['contest_type']['name'];
                 var contest_effect_url = response['contest_effect']['url'];
                 var super_contest_effect_url = response['super_contest_effect']['url'];
+                var title_name = titleCase(name);
                 var results = {
-                    accuracy: accuracy, power: power, name: name, type: type, stat_changes: stat_changes,
+                    accuracy: accuracy, power: power, name: title_name, type: type, stat_changes: stat_changes,
                     effect_changes: effect_changes, pp: pp, effect: effect, damage_class: damage_class,
                     contest_type: contest_type, contest_effect_url: contest_effect_url, super_contest_effect_url:
                     super_contest_effect_url

@@ -1,5 +1,16 @@
-<p>
-    <a href="/">Home</a>
-    <a href="/teams">Teams</a>
-    <a href="/movesets">Movesets</a>
-</p>
+<section class="navigation">
+    <div class="left">
+        <a href="/">Home</a>
+        <a href="/teams">Teams</a>
+        <a href="/movesets">Movesets</a>
+    </div>
+    <div class="right">
+        {{#unless user}}
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        {{/unless}}
+        {{#if user}}
+            <p>Welcome, {{user.username}}   <a href="/logout">Logout</a></p>
+        {{/if}}
+    </div>
+</section>

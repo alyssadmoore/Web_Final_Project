@@ -498,18 +498,13 @@ router.get('/move', function(req, res, next){
                 var pp = response['pp'];
                 var damage_class = response['damage_class']['name'];
                 var contest_type = response['contest_type']['name'];
-                var contest_combos = response['contest_combos'];
                 var contest_effect_url = response['contest_effect']['url'];
                 var super_contest_effect_url = response['super_contest_effect']['url'];
-                // console.log(contest_combos['normal']['use_before'][0]['name']);
-                // console.log(contest_combos['super']['use_before'][0]['name']);
-                // console.log(contest_combos['normal']['use_after'][0]['name']);
-                // console.log(contest_combos['super']['use_after'][0]['name']);
                 var results = {
                     accuracy: accuracy, power: power, name: name, type: type, stat_changes: stat_changes,
                     effect_changes: effect_changes, pp: pp, effect: effect, damage_class: damage_class,
-                    contest_type: contest_type, contest_effect_url: contest_effect_url, contest_combos:
-                    contest_combos, super_contest_effect_url: super_contest_effect_url
+                    contest_type: contest_type, contest_effect_url: contest_effect_url, super_contest_effect_url:
+                    super_contest_effect_url
                 };
                 return results
             }).catch(function (err) {
@@ -613,5 +608,17 @@ router.post('/removeFromMoveset', function(req, res, next){
         return next(err)
     })
 });
+
+// Returns any string passed to it in titlecase
+function titleCase(str) {
+    var words = str.toLowerCase().split(' ');
+
+    for(var x = 0; x < words.length; x++) {
+        var letters = words[x].split('');
+        letters[0] = letters[0].toUpperCase();
+        words[x] = letters.join('');
+    }
+    return words.join(' ');
+}
 
 module.exports = router;

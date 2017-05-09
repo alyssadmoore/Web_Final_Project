@@ -1,11 +1,14 @@
-<h1>Pokemon Teams</h1>
+<div class="center">
+    <h1>Pokemon Teams</h1>
+</div>
+
 {{> navigation}}
 
-<div class="editTeam">
+<div class="center">
     <h3>Which pokemon would you like to remove?</h3>
-    <ul>
+    <ol>
         {{pokemon.title}}
-        <li>1. {{pokemon.p1}}</li>
+        <li>{{pokemon.p1}}</li>
         {{#if pokemon.p1}}
             <form action="/removeFromTeam" method="POST">
                 <input type="hidden" id="team" name="team" value={{team}}>
@@ -13,7 +16,7 @@
                 <input type="submit" value="Remove">
             </form>
         {{/if}}
-        <li>2. {{pokemon.p2}}</li>
+        <li>{{pokemon.p2}}</li>
         {{#if pokemon.p2}}
             <form action="/removeFromTeam" method="POST">
                 <input type="hidden" id="team" name="team" value={{team}}>
@@ -21,7 +24,7 @@
                 <input type="submit" value="Remove">
             </form>
         {{/if}}
-        <li>3. {{pokemon.p3}}</li>
+        <li>{{pokemon.p3}}</li>
         {{#if pokemon.p3}}
             <form action="/removeFromTeam" method="POST">
                 <input type="hidden" id="team" name="team" value={{team}}>
@@ -29,7 +32,7 @@
                 <input type="submit" value="Remove">
             </form>
         {{/if}}
-        <li>4. {{pokemon.p4}}</li>
+        <li>{{pokemon.p4}}</li>
         {{#if pokemon.p4}}
             <form action="/removeFromTeam" method="POST">
                 <input type="hidden" id="team" name="team" value={{team}}>
@@ -37,7 +40,7 @@
                 <input type="submit" value="Remove">
             </form>
         {{/if}}
-        <li>5. {{pokemon.p5}}</li>
+        <li>{{pokemon.p5}}</li>
         {{#if pokemon.p5}}
             <form action="/removeFromTeam" method="POST">
                 <input type="hidden" id="team" name="team" value={{team}}>
@@ -45,7 +48,7 @@
                 <input type="submit" value="Remove">
             </form>
         {{/if}}
-        <li>6. {{pokemon.p6}}</li>
+        <li>{{pokemon.p6}}</li>
         {{#if pokemon.p6}}
             <form action="/removeFromTeam" method="POST">
                 <input type="hidden" id="team" name="team" value={{team}}>
@@ -53,5 +56,5 @@
                 <input type="submit" value="Remove">
             </form>
         {{/if}}
-    </ul>
+    </ol>
 </div>

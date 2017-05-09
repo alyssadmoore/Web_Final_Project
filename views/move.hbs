@@ -1,6 +1,9 @@
-<h1>{{name}}</h1>
+<div class="center">
+    <h1>{{name}}</h1>
+</div>
 
 {{> navigation}}
+
 <br>
 <h3>General info</h3>
 <p>Type: {{type}}</p>
@@ -12,7 +15,11 @@
     <p>Stat changes: {{stat_changes}}</p>
 {{/if}}
 {{#if effect_changes}}
-    <p>Effect changes: {{effect_changes}}</p>
+    {{#each effect_changes}}
+        {{#each this.effect_entries}}
+            <p>Effect changes: {{this.effect}}</p>
+        {{/each}}
+    {{/each}}
 {{/if}}
 <p>Effect: {{effect}}</p>
 <br>

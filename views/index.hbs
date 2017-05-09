@@ -1,17 +1,11 @@
-<h1>PokeSite</h1>
-<h2>Search & save your favorite teams and movesets</h2>
+<div class="center">
+    <h1>PokeSite</h1>
+    <h2>Search & save your favorite teams and movesets</h2>
+</div>
 
-{{#unless user}}
-    <a href="/login">Login</a>
-    <br>
-    <a href="/register">Register</a>
-{{/unless}}
-{{#if user}}
-    <p>Welcome, {{user.username}}</p>
-    <a href="/logout">Logout</a>
-{{/if}}
-
-{{> navigation}}
+<div class="navigation">
+    {{> navigation}}
+</div>
 <br>
 
 <div class="pokesearch">

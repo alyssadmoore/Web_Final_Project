@@ -7,3 +7,23 @@ body {
 a {
   color: #00B7FF;
 }
+
+.left {
+    display:inline-block;
+    float: left;
+}
+
+.right {
+    display:inline-block;
+    float: right;
+}
+
+.center {
+    text-align: center;
+}
+
+ol {
+    display:inline-block;
+    float: left;
+    padding: 20px;
+}

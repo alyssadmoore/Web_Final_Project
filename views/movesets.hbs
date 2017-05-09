@@ -1,19 +1,20 @@
-<h1>Movesets</h1>
+<div class="center">
+    <h1>Movesets</h1>
+</div>
 {{> navigation}}
 
-<div class="newmoveset">
-    <p></p>
+<div class="center">
     <form action="/newmoveset" method="POST">
         <label for="title">Moveset Name:</label>
-        <input type="text" id="title" name="title">
+        <input type="text" id="title" name="title" required>
         <input type="submit" value="Create a new moveset">
     </form>
 </div>
 
 <!-- Max 4 moves to a moveset -->
 <div class="moves">
-    <ol>
-        {{#each moves}}
+    {{#each moves}}
+        <ol>
             <p>{{this.title}}:
             <form action="/removeFromMoveset" method="GET">
                 <input type="hidden" id="id" name="id" value={{this._id}}>
@@ -23,12 +24,12 @@
                 <input type="hidden" id="moveset" name="moveset" value={{this._id}}>
                 <input type="submit" value="Delete this moveset">
             </form>
-            </p>
+            <br>
             <li>{{this.m1}}</li>
             <li>{{this.m2}}</li>
             <li>{{this.m3}}</li>
             <li>{{this.m4}}</li>
             <br>
-        {{/each}}
-    </ol>
+        </ol>
+    {{/each}}
 </div>

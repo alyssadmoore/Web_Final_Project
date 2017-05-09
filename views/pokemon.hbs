@@ -1,11 +1,11 @@
-<div class="title capitalize">
-    <h1>{{name}}</h1>   <!-- TODO capitalize CSS -->
-    <p>Pokedex #{{id}}</p>  <!-- TODO horizontal align CSS -->
+<div class="center capitalize">
+    <h1>{{name}}</h1>
+    <p>Pokedex #{{id}}</p>
 </div>
 
 {{> navigation}}
 
-<div class="sprites">   <!-- TODO horizontal align CSS -->
+<div class="sprites">
     <p>Regular: <img align="middle" src={{sprite}}></p>
     <p>Shiny: <img align="middle" src={{shiny_sprite}}></p>
 </div>
@@ -16,9 +16,7 @@
 <h4>Types:</h4>
     {{#each types}}
         <ul>
-            <div class="capitalize">
-                <li>{{this.type.name}}</li>
-            </div>
+            <li>{{this.type.name}}</li>
         </ul>
     {{/each}}
 

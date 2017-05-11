@@ -8,17 +8,15 @@
 </div>
 <br>
 
-<div class="pokesearch">
-    <P>Pokemon Search</P>
+<div class="index">
+    <h3>Pokemon Search</h3>
 
     <form action="/searchPokemon" method="GET">
         <label>Enter name: </label>
         <input id="pokemon_name" type="text" name="pokemon_name">
         <input type="submit" value="Search">
     </form>
-</div>
 
-<div class="pokeresults">
     {{#if pokemon}}
         <h3>Result: <img src="{{ sprite }}" align="middle"> {{ pokemon }}, pokedex #{{ pokemon_id }}</h3>
         <form action="/savePokemon" method="GET">
@@ -34,17 +32,15 @@
     {{/if}}
 </div>
 
-<div class="movesearch">
-    <P>Move Search</P>
+<div class="index move">
+    <h3>Move Search</h3>
 
     <form action="/searchMoves" method="GET">
         <label>Enter move: </label>
         <input id="move_name" type="text" name="move_name">
         <input type="submit" value="Search">
     </form>
-</div>
 
-<div class="moveresults">
     {{#if move}}
         <h3>Result: {{ move }}, type: {{ type }}</h3>
         <form action="/saveMove" method="GET">

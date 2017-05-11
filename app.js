@@ -11,7 +11,6 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var MongoClient = require('mongodb').MongoClient;
 var expressValidator = require('express-validator');
-var port = process.env.PORT;
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -30,10 +29,6 @@ var url = 'mongodb://mongo:' + mongo_pw + '@localhost:27017/pokesite?authSource=
 MongoClient.connect(url, function(err, db){
     assert.equal(null, err);
     console.log('Connected to MongoDB');
-
-    app.listen(process.env.PORT || 3000, function(){
-        console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
-    });
 
     app.set('views', path.join(__dirname, 'views'));
     app.set('view engine', 'hbs');

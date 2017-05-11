@@ -11,11 +11,13 @@ a {
 .left {
     display:inline-block;
     float: left;
+    padding-left: 40px;
 }
 
 .right {
     display:inline-block;
     float: right;
+    padding-right: 40px;
 }
 
 .center {
@@ -26,4 +28,20 @@ ol {
     display:inline-block;
     float: left;
     padding: 20px;
+}
+
+.index {
+    display: inline-block;
+    float: left;
+    padding-top: 40px;
+    padding-left: 175px;
+    padding-right: 40px;
+}
+
+.move {
+    padding-left: 175px;
+}
+
+.tab {
+    padding-left: 40px;
 }

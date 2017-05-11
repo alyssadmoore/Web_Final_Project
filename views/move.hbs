@@ -7,8 +7,12 @@
 <br>
 <h3>General info</h3>
 <p>Type: {{type}}</p>
-<p>Power: {{power}}</p>
-<p>Accuracy: {{accuracy}}</p>
+{{#if power}}
+    <p>Power: {{power}}</p>
+{{/if}}
+{{#if accuracy}}
+    <p>Accuracy: {{accuracy}}</p>
+{{/if}}
 <p>PP: {{pp}}</p>
 <p>Damage class: {{damage_class}}</p>
 {{#if stat_changes}}

@@ -51,12 +51,12 @@ router.get('/logout', function(req, res) {
 // View specific information about any pokemon
 router.get('/pokemon', function(req, res, next){
     var name = req.query.pokemon;
+    var lower_name = name.toLowerCase();
 
     // Getting most of the data ready
     function method1() {
-        return P.getPokemonByName(name)
+        return P.getPokemonByName(lower_name)   // search only works with all-lowercase string
             .then(function (response) {
-                var name = response['name'];
                 var id = response['id'];
                 var sprite = response['sprites']['front_default'];
                 var shiny_sprite = response['sprites']['front_shiny'];
@@ -66,10 +66,11 @@ router.get('/pokemon', function(req, res, next){
                 var abilities = response['abilities'];
                 var types = response['types'];
                 var title_name = titleCase(name);
-                return {
+                var results = {
                     name: title_name, id: id, sprite: sprite, shiny_sprite: shiny_sprite, weight: weight,
                     height: height, stats: stats, abilities: abilities, types: types
-                }
+                };
+                return results
             }).catch(function (err) {
                 res.render('index');
                 return next(err)

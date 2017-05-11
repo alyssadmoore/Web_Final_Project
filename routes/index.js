@@ -127,7 +127,7 @@ router.get('/savePokemon', function(req, res, next){
         .then(function(response){
             res.render('savePokemon', {pokemon: response, name: req.query.pokemon_name})})
         .catch(function(err){
-            res.render('teams');
+            res.render('index');
             return next(err)
         })
 });
@@ -240,7 +240,7 @@ router.post('/savePokemon', function(req, res, next){
                     if (response && again) {
                         req.db.collection('teams').updateOne({"_id": ObjectId(req.body.id)}, {$set: {"p6": req.body.name}})
                             .then(function(response){
-                                res.redirect('teams')
+                                res.redirect('/')
                             }).catch(function(err){
                                 return next(err)
                             })
@@ -255,35 +255,37 @@ router.post('/savePokemon', function(req, res, next){
     // Chaining the promises to access variable 'again', if changed
     method1().then(function(a) {
         if (!a){
-            res.redirect('teams')
+            res.redirect('/')
         } else {
             return method2(a)
         }
     }).then(function(b){
         if (!b){
-            res.redirect('teams')
+            res.redirect('/')
         } else {
             return method3(b)
         }
     }).then(function(c){
         if (!c){
-            res.redirect('teams')
+            res.redirect('/')
         } else {
             return method4(c)
         }
     }).then(function(d){
         if (!d){
-            res.redirect('teams')
+            res.redirect('/')
         } else {
             return method5(d)
         }
     }).then(function(e){
         if (!e){
-            res.redirect('teams')
+            res.redirect('/')
         } else {
             return method6(e)
         }
-    });
+    }).then(function(){
+        res.redirect('/')
+    })
 });
 
 // Page where user selects which pokemon from team to remove
@@ -466,22 +468,24 @@ router.post('/saveMove', function(req, res, next){  // Same basic method as /sav
     // Chaining the promises to access variable 'again', if changed
     method1().then(function(a) {
         if (!a){
-            res.redirect('movesets')
+            res.redirect('/')
         } else {
             return method2(a)
         }
     }).then(function(b){
         if (!b){
-            res.redirect('movesets')
+            res.redirect('/')
         } else {
             return method3(b)
         }
     }).then(function(c){
         if (!c){
-            res.redirect('movesets')
+            res.redirect('/')
         } else {
             return method4(c)
         }
+    }).then(function(){
+        res.redirect('/')
     })
 });
 

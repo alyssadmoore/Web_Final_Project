@@ -7,15 +7,15 @@
 
 <!-- Max 6 pokemon to a team -->
 <div class="team">
-    <ul>
+    <ol>
         {{#each pokemon}}
             <p>{{this.title}}:</p>
-            <li>1. {{this.p1}}</li>
-            <li>2. {{this.p2}}</li>
-            <li>3. {{this.p3}}</li>
-            <li>4. {{this.p4}}</li>
-            <li>5. {{this.p5}}</li>
-            <li>6. {{this.p6}}</li>
+            <li>{{this.p1}}</li>
+            <li>{{this.p2}}</li>
+            <li>{{this.p3}}</li>
+            <li>{{this.p4}}</li>
+            <li>{{this.p5}}</li>
+            <li>{{this.p6}}</li>
             <br>
             <form action="/savePokemon" method="POST">
                 <input type="hidden" value="{{ this._id }}" id="id" name="id">
@@ -24,5 +24,5 @@
             </form>
             <br>
         {{/each}}
-    </ul>
+    </ol>
 </div>

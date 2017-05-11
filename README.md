@@ -1,7 +1,7 @@
 # Web_Final_Project
 PokeApp
 
-- Install requirements
+- Install requirements in package.json
 - Use ECMA Script 6
 - Start MongoDB
 - nodemon
